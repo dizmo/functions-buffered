@@ -21,9 +21,9 @@ fn(new Date());
 var buffered = require('@hsk81/buffered').buffered;
 var fn = buffered(function () {
     throw new Error('should not be thrown');
-}, 200);
+}, 600);
 
-fn(tue);
+fn();
 fn.cancel();
 ```
 
