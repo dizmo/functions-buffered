@@ -40,7 +40,7 @@ describe('buffered function test', () => {
 
         let id = setInterval(() => {
             expect(n).to.equal(0);
-            fn();
+            fn(); fn(); fn();
             expect(n).to.equal(0);
         }, 1);
 
