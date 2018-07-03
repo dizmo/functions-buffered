@@ -33,5 +33,5 @@
     "test": "node ./node_modules/mocha/bin/mocha"
   },
   "types": "dist/index.d.ts",
-  "version": "1.0.5"
+  "version": "1.0.6"
 }
