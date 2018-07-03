@@ -5,32 +5,37 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *
  * The buffered function does *not* get invoked before the specified delay in
  * milliseconds passes, no matter have many times it gets invoked in between.
+ * Also upon the invocation of the *buffering* function a promise is returned.
  * Further, it is also possible to *cancel* a particular invocation before the
  * delay passes.
  *
  * @param fn an arbitrary function
- * @param ms delay in milliseconds
- * @returns a buffered function
+ * @param ms delay in milliseconds (default: 200)
+ * @returns a buffered function (returning a promise)
  */
-function buffered(fn, ms) {
-    if (ms === void 0) { ms = 200; }
-    var id, buffered = function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        var self = this;
-        if (id !== undefined) {
-            clearTimeout(id);
-            id = undefined;
-        }
-        if (id === undefined) {
-            id = setTimeout(function () {
-                fn.apply(self, args);
-            }, ms);
-        }
+function buffered(fn, ms = 200) {
+    let id, buffered = function (...args) {
+        let self = this, p = new Promise((resolve, reject) => {
+            if (id !== undefined) {
+                clearTimeout(id);
+                id = undefined;
+            }
+            if (id === undefined) {
+                id = setTimeout(() => {
+                    let res;
+                    try {
+                        res = fn.apply(self, args);
+                    }
+                    catch (err) {
+                        reject(err);
+                    }
+                    resolve(res);
+                }, ms);
+            }
+        });
+        return p;
     };
-    buffered.cancel = function () {
+    buffered.cancel = () => {
         if (id !== undefined) {
             clearTimeout(id);
             id = undefined;

@@ -19,7 +19,9 @@
   "homepage": "https://github.com/hsk81/buffered#readme",
   "keywords": [
     "buffered",
-    "function"
+    "cancelable",
+    "function",
+    "promisified"
   ],
   "license": "MIT",
   "main": "dist/index.js",
