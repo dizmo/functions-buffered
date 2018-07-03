@@ -5,12 +5,12 @@ The buffered function does *not* get invoked before the specified delay in milli
 
 ## Installation
 ```sh
-npm install --save buffered
+npm install --save @hsk81/buffered
 ```
 
 ## Usage
 ```javascript
-var buffered = require('buffered').default;
+var buffered = require('@hsk81/buffered').default;
 var fn = buffered(function (t) {
     console.log(new Date() - t);
 }, 200);
@@ -18,7 +18,7 @@ var fn = buffered(function (t) {
 fn(new Date());
 ```
 ```javascript
-var buffered = require('buffered').default;
+var buffered = require('@hsk81/buffered').buffered;
 var fn = buffered(function () {
     throw new Error('should not be thrown');
 }, 200);
