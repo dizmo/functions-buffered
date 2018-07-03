@@ -67,14 +67,14 @@ describe('buffered function test', () => {
         }, 5);
     });
 
-    it('should buffer invocations with arguments', (done) => {
+    it('should forward arguments', (done) => {
         index.buffered(function (t) {
             expect(new Date() - t >= 0).to.equal(true);
         }, 0)(new Date());
         setTimeout(done, 0);
     });
 
-    it('should buffer invocations resulting in a promise', (done) => {
+    it('should return a promise upon invocation', (done) => {
         let fn = index.buffered(function (t) {
             return new Date() - t;
         }, 0);
@@ -90,6 +90,16 @@ describe('buffered function test', () => {
             expect(err.message >= 0).to.equal(true);
         });
         setTimeout(done, 0);
+    });
+
+    it('should await the buffered function\'s result', async () => {
+        let fn = index.buffered(function (t) {
+            return new Date() - t;
+        }, 0);
+
+        let dt = await fn(new Date());
+        expect(dt).to.be.a('number');
+        expect(dt >= 0).to.equal(true);
     });
 
     it('should cancel invocations', () => {
