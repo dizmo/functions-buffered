@@ -19,12 +19,11 @@ export function buffered(fn: Function, ms: number=200): BufferedFunction {
     let id: number, buffered: Function = function (
         this: any, ...args: any[]
     ) {
-        let self = this, p = new Promise((resolve) => {
+        let self = this; return new Promise(resolve => {
             clearTimeout(id); id = setTimeout(() => {
                 resolve(fn.apply(self, args));
             }, ms);
         });
-        return p;
     };
     (buffered as BufferedFunction).cancel = () => {
         clearTimeout(id);

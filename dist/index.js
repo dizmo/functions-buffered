@@ -15,13 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 function buffered(fn, ms = 200) {
     let id, buffered = function (...args) {
-        let self = this, p = new Promise((resolve) => {
+        let self = this;
+        return new Promise(resolve => {
             clearTimeout(id);
             id = setTimeout(() => {
                 resolve(fn.apply(self, args));
             }, ms);
         });
-        return p;
     };
     buffered.cancel = () => {
         clearTimeout(id);
