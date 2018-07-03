@@ -78,7 +78,6 @@ describe('buffered function test', () => {
             expect(res >= 0).to.equal(true);
             throw new Error(res);
         }).catch((err) => {
-            expect(err.name).to.be.a('string');
             expect(err.name).to.equal('Error');
             expect(err.message).to.be.a('string');
             expect(err.message >= 0).to.equal(true);
@@ -106,6 +105,6 @@ describe('buffered function test', () => {
         let fn = index.buffered(() => {
             expect(true).to.equal(false);
         }, 1);
-        fn(); fn.cancel();
+        fn(); fn(); fn(); fn.cancel();
     });
 });
