@@ -15,14 +15,16 @@ export interface BufferedFunction extends Function {
  * @param ms delay in milliseconds
  * @returns a buffered function (returning a promise)
  */
-export function buffered(fn: Function, ms: number=200): BufferedFunction {
+export function buffered(
+    fn: Function, ms: number=200
+): BufferedFunction {
     let id: number, buffered: Function = function (
         this: any, ...args: any[]
     ) {
-        let self = this; return new Promise(resolve => {
-            clearTimeout(id); id = setTimeout(() => {
-                resolve(fn.apply(self, args));
-            }, ms);
+        return new Promise(resolve => {
+            clearTimeout(id); id = setTimeout(
+                () => resolve(fn.apply(this, args)), ms
+            );
         });
     };
     (buffered as BufferedFunction).cancel = () => {
