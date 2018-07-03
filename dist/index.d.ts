@@ -11,7 +11,7 @@ export interface BufferedFunction extends Function {
  * delay passes.
  *
  * @param fn an arbitrary function
- * @param ms delay in milliseconds (default: 200)
+ * @param ms delay in milliseconds
  * @returns a buffered function (returning a promise)
  */
 export declare function buffered(fn: Function, ms?: number): BufferedFunction;

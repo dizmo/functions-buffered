@@ -12,37 +12,22 @@ export interface BufferedFunction extends Function {
  * delay passes.
  * 
  * @param fn an arbitrary function
- * @param ms delay in milliseconds (default: 200)
+ * @param ms delay in milliseconds
  * @returns a buffered function (returning a promise)
  */
 export function buffered(fn: Function, ms: number=200): BufferedFunction {
-    let id: number|undefined, buffered: Function = function (
+    let id: number, buffered: Function = function (
         this: any, ...args: any[]
     ) {
-        let self = this, p = new Promise((resolve, reject) => {
-            if (id !== undefined) {
-                clearTimeout(id);
-                id = undefined;
-            }
-            if (id === undefined) {
-                id = setTimeout(() => {
-                    let res: any;
-                    try {
-                        res = fn.apply(self, args);
-                    } catch (err) {
-                        reject(err);
-                    }
-                    resolve(res);
-                }, ms);
-            }
+        let self = this, p = new Promise((resolve) => {
+            clearTimeout(id); id = setTimeout(() => {
+                resolve(fn.apply(self, args));
+            }, ms);
         });
         return p;
     };
     (buffered as BufferedFunction).cancel = () => {
-        if (id !== undefined) {
-            clearTimeout(id);
-            id = undefined;
-        }
+        clearTimeout(id);
     };
     return buffered as BufferedFunction;
 }

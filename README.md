@@ -16,13 +16,23 @@ npm install --save @hsk81/buffered
 var buffered = require('@hsk81/buffered').buffered;
 var fn = buffered((t) => {
     return new Date() - t;
-}, 200);
+}, 100);
 
 fn(new Date()).then((res) => {
     console.debug(res);
 }).catch((err) => {
     console.error(err);
 });
+```
+```javascript
+var buffered = require('@hsk81/buffered').buffered;
+var fn = buffered(t => new Date() - t/*, 200*/);
+try {
+    var res = await fn(new Date());
+    console.debug(res);
+} catch (err) {
+    console.error(err);
+}
 ```
 ```javascript
 var buffered = require('@hsk81/buffered').buffered;
