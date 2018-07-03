@@ -14,7 +14,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 function buffered(fn, ms) {
     if (ms === void 0) { ms = 200; }
-    var id, gn = function () {
+    var id, buffered = function () {
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
@@ -30,13 +30,13 @@ function buffered(fn, ms) {
             }, ms);
         }
     };
-    gn.cancel = function () {
+    buffered.cancel = function () {
         if (id !== undefined) {
             clearTimeout(id);
             id = undefined;
         }
     };
-    return gn;
+    return buffered;
 }
 exports.buffered = buffered;
 exports.default = buffered;

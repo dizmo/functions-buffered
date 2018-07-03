@@ -15,7 +15,7 @@ export interface BufferedFunction extends Function {
  * @returns a buffered function
  */
 export function buffered(fn: Function, ms: number=200) {
-    let id: number|undefined, gn: Function = function (
+    let id: number|undefined, buffered: Function = function (
         this: any, ...args: any[]
     ) {
         let self = this;
@@ -29,13 +29,13 @@ export function buffered(fn: Function, ms: number=200) {
             }, ms);
         }
     };
-    (gn as BufferedFunction).cancel = () => {
+    (buffered as BufferedFunction).cancel = () => {
         if (id !== undefined) {
             clearTimeout(id);
             id = undefined;
         }
     };
-    return gn as BufferedFunction;
+    return buffered as BufferedFunction;
 }
 
 export default buffered;
