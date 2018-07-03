@@ -1,5 +1,5 @@
 {
-  "name": "hsk81@buffered",
+  "name": "@hsk81/buffered",
   "version": "1.0.1",
   "description": "buffered function invocations",
   "main": "index.js",
