@@ -13,7 +13,9 @@
     "mocha": "^5.2.0",
     "typescript": "^2.9.1"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "homepage": "https://github.com/hsk81/buffered#readme",
   "keywords": [
     "buffered",
@@ -30,6 +32,6 @@
     "build": "node ./node_modules/typescript/bin/tsc",
     "test": "node ./node_modules/mocha/bin/mocha"
   },
-  "types" : "dist/index.d.ts",
-  "version": "1.0.3"
+  "types": "dist/index.d.ts",
+  "version": "1.0.4"
 }
