@@ -1,29 +1,35 @@
 {
-  "name": "@hsk81/buffered",
-  "version": "1.0.3",
-  "description": "buffered function invocations",
-  "main": "dist/index.js",
-  "scripts": {
-    "build": "node ./node_modules/typescript/bin/tsc",
-    "test": "node ./node_modules/mocha/bin/mocha"
+  "author": {
+    "name": "Hasan Karahan",
+    "email": "hasan.karahan@blackhan.com",
+    "url": "https://github.com/hsk81"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hsk81/buffered.git"
-  },
-  "keywords": [
-    "buffered",
-    "function"
-  ],
-  "author": "Hasan Karahan <hasan.karahan@blackhan.com> (https://github.com/hsk81)",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/hsk81/buffered/issues"
   },
-  "homepage": "https://github.com/hsk81/buffered#readme",
+  "description": "buffered function invocations",
   "devDependencies": {
     "chai": "^4.1.2",
     "mocha": "^5.2.0",
     "typescript": "^2.9.1"
-  }
+  },
+  "files": ["dist"],
+  "homepage": "https://github.com/hsk81/buffered#readme",
+  "keywords": [
+    "buffered",
+    "function"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "name": "@hsk81/buffered",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hsk81/buffered.git"
+  },
+  "scripts": {
+    "build": "node ./node_modules/typescript/bin/tsc",
+    "test": "node ./node_modules/mocha/bin/mocha"
+  },
+  "types" : "dist/index.d.ts",
+  "version": "1.0.3"
 }
