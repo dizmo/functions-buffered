@@ -63,7 +63,7 @@ describe('buffered function test', () => {
 
     it('should forward arguments', (done) => {
         index.buffered(function (t) {
-            expect(new Date() - t > 0).to.equal(true);
+            expect(new Date() - t >= 0).to.equal(true);
         }, 1)(new Date());
         setTimeout(done, 1);
     });
@@ -75,13 +75,13 @@ describe('buffered function test', () => {
         let p = fn(new Date());
         expect(p).to.be.a('Promise');
         p.then((res) => {
-            expect(res > 0).to.equal(true);
+            expect(res >= 0).to.equal(true);
             throw new Error(res);
         }).catch((err) => {
             expect(err.name).to.be.a('string');
             expect(err.name).to.equal('Error');
             expect(err.message).to.be.a('string');
-            expect(err.message > 0).to.equal(true);
+            expect(err.message >= 0).to.equal(true);
         });
         setTimeout(done, 1);
     });
@@ -93,7 +93,7 @@ describe('buffered function test', () => {
 
         let dt = await fn(new Date());
         expect(dt).to.be.a('number');
-        expect(dt > 0).to.equal(true);
+        expect(dt >= 0).to.equal(true);
     });
 
     it('should return a cancelable function', () => {
