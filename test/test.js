@@ -10,30 +10,24 @@ describe('buffered function test', () => {
         expect(f1).to.be.a('function');
     });
 
-    it('should return a cancelable function', () => {
-        let fn = index.default(() => {});
-        expect(fn).to.be.a('function');
-        expect(fn.cancel).to.be.a('function');
-    });
-
     it('should preserve `this` correctly', (done) => {
         index.buffered(function () {
             expect(this).to.be.an('undefined');
-        }, 0)();
+        }, 1)();
         index.buffered(() => {
             expect(this).to.be.an('object');
-        }, 0)();
+        }, 1)();
 
         index.buffered(function () {
             expect(this).to.be.an('object');
-            expect(this.key).to.equal(1);
-        }.bind({key: 1}), 0)();
+            expect(this.key).to.equal(true);
+        }.bind({key: true}), 1)();
         index.buffered((() => {
             expect(this).to.be.an('object');
             expect(this.key).to.be.an('undefined');
-        }).bind({key: 1}), 0)();
+        }).bind({key: true}), 1)();
 
-        setTimeout(done, 0);
+        setTimeout(done, 1);
     });
 
     it('should buffer invocations', (done) => {
@@ -69,43 +63,49 @@ describe('buffered function test', () => {
 
     it('should forward arguments', (done) => {
         index.buffered(function (t) {
-            expect(new Date() - t >= 0).to.equal(true);
-        }, 0)(new Date());
-        setTimeout(done, 0);
+            expect(new Date() - t > 0).to.equal(true);
+        }, 1)(new Date());
+        setTimeout(done, 1);
     });
 
-    it('should return a promise upon invocation', (done) => {
+    it('should return a promise', (done) => {
         let fn = index.buffered(function (t) {
             return new Date() - t;
-        }, 0);
+        }, 1);
         let p = fn(new Date());
         expect(p).to.be.a('Promise');
         p.then((res) => {
-            expect(res >= 0).to.equal(true);
+            expect(res > 0).to.equal(true);
             throw new Error(res);
         }).catch((err) => {
             expect(err.name).to.be.a('string');
             expect(err.name).to.equal('Error');
             expect(err.message).to.be.a('string');
-            expect(err.message >= 0).to.equal(true);
+            expect(err.message > 0).to.equal(true);
         });
-        setTimeout(done, 0);
+        setTimeout(done, 1);
     });
 
-    it('should await the buffered function\'s result', async () => {
+    it('should await a result', async () => {
         let fn = index.buffered(function (t) {
             return new Date() - t;
-        }, 0);
+        }, 1);
 
         let dt = await fn(new Date());
         expect(dt).to.be.a('number');
-        expect(dt >= 0).to.equal(true);
+        expect(dt > 0).to.equal(true);
+    });
+
+    it('should return a cancelable function', () => {
+        let fn = index.default(() => {});
+        expect(fn).to.be.a('function');
+        expect(fn.cancel).to.be.a('function');
     });
 
     it('should cancel invocations', () => {
         let fn = index.buffered(() => {
             expect(true).to.equal(false);
-        }, 0);
+        }, 1);
         fn(); fn.cancel();
     });
 });
