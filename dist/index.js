@@ -1,4 +1,5 @@
 "use strict";
+
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Returns a buffered and cancelable version for the provided function.
@@ -13,18 +14,30 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * @param ms delay in milliseconds
  * @returns a buffered function (returning a promise)
  */
-function buffered(fn, ms = 200) {
-    let id, buffered = function (...args) {
-        return new Promise(resolve => {
+function buffered(fn) {
+    var ms = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 200;
+
+    var id = void 0,
+        buffered = function buffered() {
+        var _this = this;
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return new Promise(function (resolve) {
             clearTimeout(id);
-            id = setTimeout(() => resolve(fn.apply(this, args)), ms);
+            id = setTimeout(function () {
+                return resolve(fn.apply(_this, args));
+            }, ms);
         });
     };
-    buffered.cancel = () => {
+    buffered.cancel = function () {
         clearTimeout(id);
     };
     return buffered;
 }
 exports.buffered = buffered;
 exports.default = buffered;
+
 //# sourceMappingURL=index.js.map
