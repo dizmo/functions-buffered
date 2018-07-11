@@ -1,4 +1,6 @@
-export interface BufferedFunction extends Function {
+/* tslint:disable:ban-types */
+
+export interface IBufferedFunction extends Function {
     cancel: Function;
 }
 
@@ -10,27 +12,28 @@ export interface BufferedFunction extends Function {
  * Also upon the invocation of the *buffering* function a promise is returned.
  * Further, it is also possible to *cancel* a particular invocation before the
  * delay passes.
- * 
+ *
  * @param fn an arbitrary function
  * @param ms delay in milliseconds
  * @returns a buffered function (returning a promise)
  */
 export function buffered(
-    fn: Function, ms: number=200
-): BufferedFunction {
-    let id: number, buffered: Function = function (
-        this: any, ...args: any[]
+    fn: Function, ms: number = 200,
+): IBufferedFunction {
+    let id: number;
+    const bn: Function = function(
+        this: any, ...args: any[] // tslint:disable-line:trailing-comma
     ) {
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             clearTimeout(id); id = setTimeout(
-                () => resolve(fn.apply(this, args)), ms
+                () => resolve(fn.apply(this, args)), ms,
             );
         });
     };
-    (buffered as BufferedFunction).cancel = () => {
+    (bn as IBufferedFunction).cancel = () => {
         clearTimeout(id);
     };
-    return buffered as BufferedFunction;
+    return bn as IBufferedFunction;
 }
 
 export default buffered;

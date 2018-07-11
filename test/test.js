@@ -2,7 +2,7 @@
 var expect = require('chai').expect;
 var index = require('../dist/index.js');
 
-describe('buffered function test', () => {
+describe('buffered function tests', () => {
     it('should return a buffered function', () => {
         let f0 = index.default(() => {});
         expect(f0).to.be.a('function');
