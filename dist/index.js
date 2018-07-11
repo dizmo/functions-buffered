@@ -1,4 +1,5 @@
 "use strict";
+/* tslint:disable:ban-types */
 
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
@@ -17,8 +18,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 function buffered(fn) {
     var ms = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 200;
 
-    var id = void 0,
-        buffered = function buffered() {
+    var id = void 0;
+    var bn = function bn() // tslint:disable-line:trailing-comma
+    {
         var _this = this;
 
         for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
@@ -32,10 +34,10 @@ function buffered(fn) {
             }, ms);
         });
     };
-    buffered.cancel = function () {
+    bn.cancel = function () {
         clearTimeout(id);
     };
-    return buffered;
+    return bn;
 }
 exports.buffered = buffered;
 exports.default = buffered;

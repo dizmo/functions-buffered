@@ -1,4 +1,4 @@
-export interface BufferedFunction extends Function {
+export interface IBufferedFunction extends Function {
     cancel: Function;
 }
 /**
@@ -14,6 +14,6 @@ export interface BufferedFunction extends Function {
  * @param ms delay in milliseconds
  * @returns a buffered function (returning a promise)
  */
-export declare function buffered(fn: Function, ms?: number): BufferedFunction;
+export declare function buffered(fn: Function, ms?: number): IBufferedFunction;
 export default buffered;
 //# sourceMappingURL=index.d.ts.map
