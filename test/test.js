@@ -2,7 +2,25 @@
 var expect = require('chai').expect;
 var index = require('../dist/index.js');
 
-describe('buffered function tests', () => {
+describe('index', () => {
+    it('should exist', () => {
+        expect(index).to.exist;
+    });
+    it('should export a default', () => {
+        expect(index.default).to.exist;
+    });
+});
+
+describe('index.buffered', () => {
+    it('should exist', () => {
+        expect(index.buffered).to.exist;
+    });
+    it('should be a function', () => {
+        expect(index.buffered).to.be.a('function');
+    });
+});
+
+describe('index.buffered', () => {
     it('should return a buffered function', () => {
         let f0 = index.default(() => {});
         expect(f0).to.be.a('function');
