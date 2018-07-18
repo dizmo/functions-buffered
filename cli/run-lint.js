@@ -3,7 +3,7 @@ let child_process = require('child_process'),
 
 let run_script = function () {
     child_process.spawn('npx', [
-        'tslint', '--config', 'tslint.json', "'lib/**/*.ts'", '--fix'
+        'tslint', '--config', 'tslint.json', "'lib/**/*.ts'"
     ].concat(process.argv.slice(2)), {
         shell: true, stdio: 'inherit'
     });
