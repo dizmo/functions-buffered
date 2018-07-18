@@ -4,10 +4,8 @@
     "email": "hasan.karahan@blackhan.com",
     "url": "https://github.com/hsk81"
   },
-  "bugs": {
-    "url": "https://github.com/hsk81/buffered/issues"
-  },
   "description": "buffered function invocations",
+  "dependencies": {},
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
@@ -16,31 +14,32 @@
     "istanbul": "^0.4.5",
     "mocha": "^5.2.0",
     "tslint": "^5.10.0",
-    "typescript": "^2.9.1"
+    "typescript": "^2.9.2"
   },
   "files": [
     "dist"
   ],
-  "homepage": "https://github.com/hsk81/buffered#readme",
   "keywords": [
+    "library",
+    "module",
     "buffered",
     "cancelable",
     "function",
     "promisified"
   ],
-  "license": "MIT",
+  "license": "ISC",
   "main": "dist/index.js",
   "name": "@hsk81/buffered",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hsk81/buffered.git"
+    "url": "https://github.com/hsk81/buffered.git"
   },
   "scripts": {
-    "build": "npx tsc && npx babel dist/index.js --out-file dist/index.js --source-maps --presets=env",
-    "cover": "npx istanbul cover _mocha test/*.js",
-    "lint": "npx tslint --config tslint.json 'lib/**/*.ts'",
-    "lint:fix": "npx tslint --config tslint.json 'lib/**/*.ts' --fix",
-    "test": "npx mocha"
+    "build": "node ./cli/run-build.js",
+    "cover": "node ./cli/run-cover.js",
+    "lint": "node ./cli/run-lint.js",
+    "lint:fix": "node ./cli/run-lint-fix.js",
+    "test": "node ./cli/run-test.js"
   },
   "types": "dist/index.d.ts",
   "version": "1.1.17"
