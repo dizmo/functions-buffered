@@ -1,7 +1,7 @@
-[![Build Status](https://travis-ci.org/hsk81/buffered.svg?branch=master)](https://travis-ci.org/hsk81/buffered)
-[![Coverage Status](https://coveralls.io/repos/github/hsk81/buffered/badge.svg?branch=master)](https://coveralls.io/github/hsk81/buffered?branch=master)
+[![Build Status](https://travis-ci.org/dizmo/functions-buffered.svg?branch=master)](https://travis-ci.org/dizmo/functions-buffered)
+[![Coverage Status](https://coveralls.io/repos/github/dizmo/functions-buffered/badge.svg?branch=master)](https://coveralls.io/github/dizmo/functions-buffered?branch=master)
 
-# @hsk81/buffered
+# @dizmo/functions-buffered
 A [Node.js] module that returns a *buffered* and *cancelable* version for the provided function. The buffered function does **not** execute before the specified delay passes upon which it executes exactly **once**, no matter have many times it gets invoked in between. Also upon the invocation of the *buffering* function a promise is returned. Further, the *cancellation* of a particular invocation is only possible while the specified delay has not passed.
 
 [Node.js]: https://nodejs.org/en/
@@ -9,15 +9,15 @@ A [Node.js] module that returns a *buffered* and *cancelable* version for the pr
 ## Usage
 ### Install
 ```sh
-npm install @hsk81/buffered --save
+npm install @dizmo/functions-buffered --save
 ```
 ### Require
 ```javascript
-var lib = require('@hsk81/buffered');
+var lib = require('@dizmo/functions-buffered');
 ```
 ### Examples
 ```javascript
-var buffered = require('@hsk81/buffered').buffered;
+var buffered = require('@dizmo/functions-buffered').buffered;
 var fn = buffered((t) => {
     return new Date() - t;
 }, 200);
@@ -29,7 +29,7 @@ fn(new Date()).then((res) => {
 });
 ```
 ```javascript
-var buffered = require('@hsk81/buffered').buffered;
+var buffered = require('@dizmo/functions-buffered').buffered;
 var fn = buffered(() => {
     throw new Error("won't be thrown");
 }, 600);
@@ -65,6 +65,6 @@ npm run test
 npm run cover
 ```
 
-## License
+## Copyright
 
- © 2018 [Hasan Karahan](https://github.com/hsk81)
+ © 2018 [dizmo AG](http://dizmo.com/), Switzerland

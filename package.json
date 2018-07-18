@@ -4,7 +4,7 @@
     "email": "hasan.karahan@blackhan.com",
     "url": "https://github.com/hsk81"
   },
-  "description": "buffered function invocations",
+  "description": "buffered invocations",
   "dependencies": {},
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -29,10 +29,10 @@
   ],
   "license": "ISC",
   "main": "dist/index.js",
-  "name": "@hsk81/buffered",
+  "name": "@dizmo/buffered",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hsk81/buffered.git"
+    "url": "https://github.com/dizmo/functions-buffered.git"
   },
   "scripts": {
     "build": "node ./cli/run-build.js",
