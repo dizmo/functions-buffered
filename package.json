@@ -29,7 +29,7 @@
   ],
   "license": "ISC",
   "main": "dist/index.js",
-  "name": "@dizmo/buffered",
+  "name": "@dizmo/functions-buffered",
   "repository": {
     "type": "git",
     "url": "https://github.com/dizmo/functions-buffered.git"
