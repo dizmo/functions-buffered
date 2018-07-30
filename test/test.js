@@ -1,6 +1,6 @@
 'use strict';
-var expect = require('chai').expect;
-var index = require('../dist/index.js');
+let expect = require('chai').expect;
+let index = require('../dist/index.js');
 
 describe('index', () => {
     it('should exist', () => {
