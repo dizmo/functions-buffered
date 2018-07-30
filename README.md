@@ -53,10 +53,6 @@ npm run build
 ```sh
 npm run lint
 ```
-#### with fixes:
-```sh
-npm run lint:fix
-```
 ### Test
 ```sh
 npm run test

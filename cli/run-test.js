@@ -1,29 +1,30 @@
-let child_process = require('child_process'),
+let ps = require('child_process'),
     fs = require('fs');
 
-let run_script = function () {
-    child_process.spawn('npx', [
-        'mocha'
-    ].concat(process.argv.slice(2)), {
-        shell: true, stdio: 'inherit'
-    });
-};
-
-fs.access('./node_modules', function (error) {
-    if (error) {
-        let Spinner = require('./cli-spinner').Spinner,
-            spinner = new Spinner('%s fetching dependencies: .. ');
-        let npm_install = child_process.spawn('npm', [
-            'install'
-        ], {
-            shell: true, stdio: 'ignore'
+function npm_install(flag) {
+    if (flag) {
+        ps.spawn('npm', ['install'], {
+            shell: true, stdio: 'inherit'
+        }).on('exit', function (code) {
+            npx_mocha(code);
         });
-        npm_install.on('close', function () {
-            spinner.stop(true);
-            run_script();
-        });
-        spinner.start();
     } else {
-        run_script();
+        npx_mocha(0);
     }
-});
+}
+
+function npx_mocha(code) {
+    if (code === 0) {
+        ps.spawn('npx', [
+            'mocha'
+        ].concat(process.argv.slice(2)), {
+            shell: true, stdio: 'inherit'
+        }).on('exit', function (code) {
+            process.exit(code);
+        });
+    } else {
+        process.exit(code);
+    }
+}
+
+fs.access('./node_modules', npm_install);
