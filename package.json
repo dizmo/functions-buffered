@@ -38,7 +38,6 @@
     "build": "node ./cli/run-build.js",
     "cover": "node ./cli/run-cover.js",
     "lint": "node ./cli/run-lint.js",
-    "lint:fix": "node ./cli/run-lint-fix.js",
     "test": "node ./cli/run-test.js"
   },
   "types": "dist/index.d.ts",
