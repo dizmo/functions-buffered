@@ -42,3 +42,5 @@ function buffered(fn) {
 exports.buffered = buffered;
 exports.default = buffered;
 //# sourceMappingURL=index.js.map
+//# sourceMappingURL=index.js.map
+//# sourceMappingURL=index.js.map
