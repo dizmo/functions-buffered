@@ -24,12 +24,10 @@
     "dist/lib"
   ],
   "keywords": [
+    "dizmo",
+    "functions",
     "library",
-    "module",
-    "buffered",
-    "cancelable",
-    "function",
-    "promisified"
+    "buffered"
   ],
   "license": "ISC",
   "main": "dist/lib/index.js",
