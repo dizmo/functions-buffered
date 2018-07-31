@@ -28,7 +28,7 @@ function npm_lint(code) {
     if (code === 0 && argv('lint') === true) {
         ps.spawn('npm', [
             'run-script', '--', 'lint'
-        ].concat(process.argv.slice(2)), {
+        ], {
             shell: true, stdio: 'inherit'
         }).on('exit', function (code) {
             npx_tsc(code);
@@ -42,7 +42,7 @@ function npx_tsc(code) {
     if (code === 0) {
         ps.spawn('npx', [
             'tsc'
-        ].concat(process.argv.slice(2)), {
+        ], {
             shell: true, stdio: 'inherit'
         }).on('exit', function (code) {
             npx_babel(code);
@@ -56,7 +56,7 @@ function npx_babel(code) {
     if (code === 0) {
         ps.spawn('npx', [
             'babel', 'dist', '-d', 'dist', '--presets=env', '-s'
-        ].concat(process.argv.slice(2)), {
+        ], {
             shell: true, stdio: 'inherit'
         }).on('exit', function (code) {
             process.exit(code);

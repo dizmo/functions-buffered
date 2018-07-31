@@ -17,7 +17,7 @@ function npx_tslint(code) {
     if (code === 0) {
         ps.spawn('npx', [
             'tslint', '--config', 'tslint.json', "'lib/**/*.ts'"
-        ].concat(process.argv.slice(2)), {
+        ], {
             shell: true, stdio: 'inherit'
         }).on('exit', function (code) {
             process.exit(code);
