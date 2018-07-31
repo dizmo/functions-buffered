@@ -14,30 +14,30 @@ npm install @dizmo/functions-buffered --save
 ```
 ### Require
 ```javascript
-var lib = require('@dizmo/functions-buffered');
+let lib = require('@dizmo/functions-buffered');
 ```
 ### Examples
-```javascript
-var buffered = require('@dizmo/functions-buffered').buffered;
-var fn = buffered((t) => {
-    return new Date() - t;
+```typescript
+import { buffered } from '@dizmo/functions-buffered';
+let fn = buffered((t: any) => {
+    return new Date() as any - t;
 }, 200);
 
-fn(new Date()).then((res) => {
+fn(new Date()).then((res: number) => {
     console.debug(res);
-}).catch((err) => {
+}).catch((err: Error) => {
     console.error(err);
 });
 ```
-```javascript
-var buffered = require('@dizmo/functions-buffered').buffered;
-var fn = buffered(() => {
+```typescript
+import { buffered } from '@dizmo/functions-buffered';
+let fn = buffered(() => {
     throw new Error("won't be thrown");
 }, 600);
 
-fn().then((res) => { // won't execute (due to `fn.cancel`)
+fn().then((res: any) => { // won't execute due to `fn.cancel`!
     console.debug(res);
-}).catch((err) => {
+}).catch((err: Error) => {
     console.error(err);
 });
 
@@ -49,17 +49,33 @@ fn.cancel();
 ```sh
 npm run build
 ```
+#### without linting:
+```sh
+npm run -- build --no-lint
+```
 ### Lint
 ```sh
 npm run lint
+```
+#### with auto-fixing (for JavaScript and TypeScript):
+```sh
+npm run -- lint --fix
 ```
 ### Test
 ```sh
 npm run test
 ```
+#### without (re-)building:
+```sh
+npm run -- test --no-build
+```
 ### Cover
 ```sh
 npm run cover
+```
+#### without (re-)building:
+```sh
+npm run -- cover --no-build
 ```
 
 ## Copyright

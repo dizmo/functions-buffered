@@ -14,10 +14,13 @@ function npm_install(flag) {
 }
 
 function npx_tslint(code) {
+    let lint = function (sources) {
+        return [
+            'tslint', '--config', 'tslint.json'
+        ].concat(sources, process.argv.slice(2))
+    };
     if (code === 0) {
-        ps.spawn('npx', [
-            'tslint', '--config', 'tslint.json', "'lib/**/*.ts'"
-        ], {
+        ps.spawn('npx', lint(["'lib/**/*.ts'", "'test/**/*.ts'"]), {
             shell: true, stdio: 'inherit'
         }).on('exit', function (code) {
             process.exit(code);

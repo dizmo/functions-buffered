@@ -50,7 +50,7 @@ function npx_tsc(code) {
     } else {
         npx_babel(code);
     }
-};
+}
 
 function npx_babel(code) {
     if (code === 0) {
@@ -64,6 +64,6 @@ function npx_babel(code) {
     } else {
         process.exit(code);
     }
-};
+}
 
 fs.access('./node_modules', npm_install);
