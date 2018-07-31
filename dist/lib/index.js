@@ -1,7 +1,8 @@
 "use strict";
-/* tslint:disable:ban-types */
 
 Object.defineProperty(exports, "__esModule", { value: true });
+/* tslint:disable:ban-types */
+require("babel-polyfill");
 /**
  * Returns a buffered and cancelable version for the provided function.
  *

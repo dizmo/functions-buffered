@@ -27,7 +27,6 @@ var __awaiter = undefined && undefined.__awaiter || function (thisArg, _argument
 Object.defineProperty(exports, "__esModule", { value: true });
 var index_1 = require("../lib/index");
 var chai_1 = require("chai");
-require("babel-polyfill");
 require("mocha");
 describe('index.buffered', function () {
     it('should exist', function () {

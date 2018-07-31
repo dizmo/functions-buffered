@@ -1,3 +1,4 @@
+import "babel-polyfill";
 export interface IBufferedFunction extends Function {
     cancel: Function;
 }

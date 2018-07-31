@@ -1,6 +1,5 @@
 import { buffered } from '../lib/index';
 import { expect } from 'chai';
-import 'babel-polyfill';
 import 'mocha';
 
 describe('index.buffered', () => {
