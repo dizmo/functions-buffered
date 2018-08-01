@@ -4,10 +4,10 @@
     "email": "hasan.karahan@blackhan.com",
     "url": "https://github.com/hsk81"
   },
-  "description": "buffered invocations",
   "dependencies": {
     "babel-polyfill": "^6.26.0"
   },
+  "description": "buffered invocations",
   "devDependencies": {
     "@types/chai": "^4.1.4",
     "@types/mocha": "^5.2.5",

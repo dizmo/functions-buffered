@@ -1,69 +1,43 @@
-let ps = require('child_process'),
+let cp = require('child_process'),
+    ps = require('process'),
     fs = require('fs');
 
-function argv(key, value) {
-    let argv = require('yargs')
-        .default('lint', true)
-        .argv;
-    if (argv[key] !== undefined) {
-        return argv[key];
-    } else {
-        return value;
-    }
+function arg(key, lhs, rhs) {
+    let y = require('yargs')
+        .default('lint', true);
+    return y.argv[key]
+        ? lhs !== undefined ? lhs : y.argv[key] : rhs;
 }
-
-function npm_install(flag) {
+function run(cmd, ...args) {
+    return new Promise((res, rej) => cp.spawn(cmd, args, {
+        shell: true, stdio: 'inherit'
+    }).on('exit', (code) =>
+        code === 0 ? res(code) : rej(code)
+    ));
+};
+function run_install(flag) {
     if (flag) {
-        ps.spawn('npm', ['install'], {
-            shell: true, stdio: 'inherit'
-        }).on('exit', function (code) {
-            npm_lint(code);
-        });
+        run('npm', 'install')
+            .then(run_lint).catch(ps.exit);
     } else {
-        npm_lint(0);
+        run_lint();
     }
 }
-
-function npm_lint(code) {
-    if (code === 0 && argv('lint') === true) {
-        ps.spawn('npm', [
-            'run-script', '--', 'lint'
-        ], {
-            shell: true, stdio: 'inherit'
-        }).on('exit', function (code) {
-            npx_tsc(code);
-        });
-    } else {
-        npx_tsc(code);
+function run_lint() {
+    if (arg('lint')) {
+        run('npm', 'run-script', 'lint')
+            .then(run_tsc).catch(ps.exit);
     }
 }
-
-function npx_tsc(code) {
-    if (code === 0) {
-        ps.spawn('npx', [
-            'tsc'
-        ], {
-            shell: true, stdio: 'inherit'
-        }).on('exit', function (code) {
-            npx_babel(code);
-        });
-    } else {
-        npx_babel(code);
-    }
+function run_tsc() {
+    run('npx', 'tsc').then(run_babel).catch(ps.exit);
 }
+function run_babel() {
+    let babel = (...args) => [
+        'babel', '--presets=env', '--quiet', '-s', '-d'
+    ].concat(args);
+    run('npx', ...babel('dist', 'dist'))
+        .then(ps.exit).catch(ps.exit);
+};
 
-function npx_babel(code) {
-    if (code === 0) {
-        ps.spawn('npx', [
-            'babel', 'dist', '-d', 'dist', '--presets=env', '-s'
-        ], {
-            shell: true, stdio: 'inherit'
-        }).on('exit', function (code) {
-            process.exit(code);
-        });
-    } else {
-        process.exit(code);
-    }
-}
-
-fs.access('./node_modules', npm_install);
+fs.access('./node_modules', run_install);

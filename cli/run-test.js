@@ -1,56 +1,38 @@
-let ps = require('child_process'),
+let cp = require('child_process'),
+    ps = require('process'),
     fs = require('fs');
 
-function argv(key, value) {
-    let argv = require('yargs')
+function arg(key, lhs, rhs) {
+    let y = require('yargs')
         .default('build', true)
-        .default('cover', false)
-        .argv;
-    if (argv[key] !== undefined) {
-        return argv[key];
-    } else {
-        return value;
-    }
+        .default('cover', false);
+    return y.argv[key]
+        ? lhs !== undefined ? lhs : y.argv[key] : rhs;
 }
-
-function npm_install(flag) {
+function run(cmd, ...args) {
+    return new Promise((res, rej) => cp.spawn(cmd, args, {
+        shell: true, stdio: 'inherit'
+    }).on('exit', (code) =>
+        code === 0 ? res(code) : rej(code)
+    ));
+};
+function run_install(flag) {
     if (flag) {
-        ps.spawn('npm', ['install'], {
-            shell: true, stdio: 'inherit'
-        }).on('exit', function (code) {
-            npm_build(code);
-        });
+        run('npm', 'install')
+            .then(run_build).catch(ps.exit);
     } else {
-        npm_build(0);
+        run_build();
     }
 }
-
-function npm_build(code) {
-    if (code === 0 && argv('build') === true) {
-        ps.spawn('npm', [
-            'run-script', '--', 'build'
-        ], {
-            shell: true, stdio: 'inherit'
-        }).on('exit', function (code) {
-            npx_mocha(code);
-        });
-    } else {
-        npx_mocha(code);
+function run_build() {
+    if (arg('build')) {
+        run('npm', 'run-script', 'build')
+            .then(run_mocha).catch(ps.exit);
     }
 }
-
-function npx_mocha(code) {
-    if (code === 0) {
-        ps.spawn('npx', [
-            argv('cover') ? 'nyc' : '', 'mocha', 'dist/test'
-        ], {
-            shell: true, stdio: 'inherit'
-        }).on('exit', function (code) {
-            process.exit(code);
-        });
-    } else {
-        process.exit(code);
-    }
+function run_mocha() {
+    run('npx', arg('cover', 'nyc'), 'mocha', 'dist/test')
+        .then(ps.exit).catch(ps.exit);
 }
 
-fs.access('./node_modules', npm_install);
+fs.access('./node_modules', run_install);
