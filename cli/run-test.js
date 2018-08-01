@@ -21,13 +21,15 @@ function run_install(flag) {
         run('npm', 'install')
             .then(run_build).catch(ps.exit);
     } else {
-        run_build();
+        run_build(0);
     }
 }
 function run_build() {
     if (arg('build')) {
         run('npm', 'run-script', 'build')
             .then(run_mocha).catch(ps.exit);
+    } else {
+        run_mocha(0);
     }
 }
 function run_mocha() {

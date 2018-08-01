@@ -20,13 +20,15 @@ function run_install(flag) {
         run('npm', 'install')
             .then(run_lint).catch(ps.exit);
     } else {
-        run_lint();
+        run_lint(0);
     }
 }
 function run_lint() {
     if (arg('lint')) {
         run('npm', 'run-script', 'lint')
             .then(run_tsc).catch(ps.exit);
+    } else {
+        run_tsc(0);
     }
 }
 function run_tsc() {

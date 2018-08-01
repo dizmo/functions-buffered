@@ -14,10 +14,10 @@ function run_install(flag) {
         run('npm', 'install')
             .then(run_lint).catch(ps.exit);
     } else {
-        run_lint();
+        run_lint(0);
     }
 }
-function run_lint(code) {
+function run_lint() {
     let lint = (...args) => [
         'tslint', '--config', 'tslint.json'
     ].concat(
