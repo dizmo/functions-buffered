@@ -14,7 +14,7 @@ function run(cmd, ...args) {
     }).on('exit', (code) =>
         code === 0 ? res(code) : rej(code)
     ));
-};
+}
 function run_install(flag) {
     if (flag) {
         run('npm', 'install')
@@ -40,6 +40,6 @@ function run_babel() {
     ].concat(args);
     run('npx', ...babel('dist', 'dist'))
         .then(ps.exit).catch(ps.exit);
-};
+}
 
 fs.access('./node_modules', run_install);

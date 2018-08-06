@@ -8,7 +8,7 @@ function run(cmd, ...args) {
     }).on('exit', (code) =>
         code === 0 ? res(code) : rej(code)
     ));
-};
+}
 function run_install(flag) {
     if (flag) {
         run('npm', 'install')
