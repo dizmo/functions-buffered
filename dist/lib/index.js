@@ -41,5 +41,29 @@ function buffered(fn) {
     return bn;
 }
 exports.buffered = buffered;
+function decorator(arg, key, descriptor) {
+    if (typeof arg === "number") {
+        return _decorator(arg);
+    } else {
+        _decorator(200)(arg, key, descriptor);
+    }
+}
+exports.decorator = decorator;
+function _decorator(ms) {
+    return function (target, key, descriptor) {
+        var fn = descriptor ? descriptor.value : target[key];
+        var bn = buffered(fn, ms);
+        for (var el in fn) {
+            if (fn.hasOwnProperty(el)) {
+                bn[el] = fn[el];
+            }
+        }
+        if (descriptor) {
+            descriptor.value = bn;
+        } else {
+            target[key] = bn;
+        }
+    };
+}
 exports.default = buffered;
 //# sourceMappingURL=index.js.map

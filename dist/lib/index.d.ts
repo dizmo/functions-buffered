@@ -16,5 +16,7 @@ export interface IBufferedFunction extends Function {
  * @returns a buffered function (returning a promise)
  */
 export declare function buffered(fn: Function, ms?: number): IBufferedFunction;
+export declare function decorator(ms: number): IBufferedFunction;
+export declare function decorator(target: any, key: string, descriptor?: PropertyDescriptor): void;
 export default buffered;
 //# sourceMappingURL=index.d.ts.map

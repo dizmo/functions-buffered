@@ -39,7 +39,7 @@ describe("index.buffered", function () {
 describe("index.buffered", function () {
     it("should return a buffered function", function () {
         var fn = index_1.buffered(function () {
-            chai_1.expect(true).to.equal(true);
+            chai_1.expect(true).to.eq(true);
         });
         chai_1.expect(fn).to.be.a("function");
     });
@@ -49,7 +49,7 @@ describe("index.buffered", function () {
         }, 1)();
         index_1.buffered(function () {
             chai_1.expect(this).to.be.an("object");
-            chai_1.expect(this.key).to.equal(true);
+            chai_1.expect(this.key).to.eq(true);
         }.bind({ key: true }), 1)();
         setTimeout(done, 1);
     });
@@ -58,49 +58,49 @@ describe("index.buffered", function () {
         var fn = index_1.buffered(function () {
             n += 1;
         }, 5);
-        chai_1.expect(n).to.equal(0);
+        chai_1.expect(n).to.eq(0);
         chai_1.expect(fn).to.be.a("function");
         var id = setInterval(function () {
-            chai_1.expect(n).to.equal(0);
+            chai_1.expect(n).to.eq(0);
             fn();
             fn();
             fn();
-            chai_1.expect(n).to.equal(0);
+            chai_1.expect(n).to.eq(0);
         }, 1);
         setTimeout(function () {
-            chai_1.expect(n).to.equal(0);
+            chai_1.expect(n).to.eq(0);
             clearInterval(id);
-            chai_1.expect(n).to.equal(0);
+            chai_1.expect(n).to.eq(0);
             setTimeout(function () {
-                chai_1.expect(n).to.equal(0);
+                chai_1.expect(n).to.eq(0);
             }, 1);
-            chai_1.expect(n).to.equal(0);
+            chai_1.expect(n).to.eq(0);
             setTimeout(function () {
-                chai_1.expect(n).to.equal(1);
+                chai_1.expect(n).to.eq(1);
                 done();
             }, 5);
-            chai_1.expect(n).to.equal(0);
+            chai_1.expect(n).to.eq(0);
         }, 5);
     });
     it("should forward arguments", function (done) {
         index_1.buffered(function (t) {
-            chai_1.expect(new Date() - t >= 0).to.equal(true);
-        }, 1)(new Date());
+            chai_1.expect(new Date().getTime() - t >= 0).to.eq(true);
+        }, 1)(new Date().getTime());
         setTimeout(done, 1);
     });
     it("should return a promise", function (done) {
         var fn = index_1.buffered(function (t) {
-            return new Date() - t;
+            return new Date().getTime() - t;
         }, 1);
-        var p = fn(new Date());
+        var p = fn(new Date().getTime());
         chai_1.expect(p).to.be.a("Promise");
         p.then(function (res) {
-            chai_1.expect(res >= 0).to.equal(true);
+            chai_1.expect(res >= 0).to.eq(true);
             throw new Error(res.toString());
         }).catch(function (err) {
-            chai_1.expect(err.name).to.equal("Error");
+            chai_1.expect(err.name).to.eq("Error");
             chai_1.expect(err.message).to.be.a("string");
-            chai_1.expect(err.message >= "0").to.equal(true);
+            chai_1.expect(err.message >= "0").to.eq(true);
         });
         setTimeout(done, 1);
     });
@@ -121,7 +121,7 @@ describe("index.buffered", function () {
                             dt = _context.sent;
 
                             chai_1.expect(dt).to.be.a("number");
-                            chai_1.expect(dt >= 0).to.equal(true);
+                            chai_1.expect(dt >= 0).to.eq(true);
 
                         case 6:
                         case "end":
@@ -133,14 +133,14 @@ describe("index.buffered", function () {
     });
     it("should return a cancelable function", function () {
         var fn = index_1.buffered(function () {
-            chai_1.expect(true).to.equal(true);
+            chai_1.expect(true).to.eq(true);
         });
         chai_1.expect(fn).to.be.a("function");
         chai_1.expect(fn.cancel).to.be.a("function");
     });
     it("should cancel invocations", function () {
         var fn = index_1.buffered(function () {
-            chai_1.expect(true).to.equal(false);
+            chai_1.expect(true).to.eq(false);
         }, 1);
         fn();
         fn();

@@ -37,4 +37,44 @@ export function buffered(
     return bn as IBufferedFunction;
 }
 
+export function decorator(
+    ms: number,
+): IBufferedFunction;
+
+export function decorator(
+    target: any, key: string, descriptor?: PropertyDescriptor,
+): void;
+
+export function decorator(
+    arg: number|any, key?: string, descriptor?: PropertyDescriptor,
+): IBufferedFunction|void {
+    if (typeof arg === "number") {
+        return _decorator(arg) as IBufferedFunction;
+    } else {
+        _decorator(200)(arg as any, key, descriptor);
+    }
+}
+
+function _decorator(
+    ms: number,
+): Function {
+    return (
+        target: any, key: string, descriptor?: PropertyDescriptor,
+    ) => {
+        const fn: Function = descriptor
+            ? descriptor.value : target[key];
+        const bn = buffered(fn, ms);
+        for (const el in fn) {
+            if (fn.hasOwnProperty(el)) {
+                (bn as any)[el] = (fn as any)[el];
+            }
+        }
+        if (descriptor) {
+            descriptor.value = bn;
+        } else {
+            target[key] = bn;
+        }
+    };
+}
+
 export default buffered;
