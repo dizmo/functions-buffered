@@ -3,9 +3,12 @@
 [![Coverage Status](https://coveralls.io/repos/github/dizmo/functions-buffered/badge.svg?branch=master)](https://coveralls.io/github/dizmo/functions-buffered?branch=master)
 
 # @dizmo/functions-buffered
-A [Node.js] module that returns a *buffered* and *cancelable* version for the provided function. The buffered function does **not** execute before the specified delay passes upon which it executes exactly **once**, no matter have many times it gets invoked in between. Also upon the invocation of the *buffering* function a promise is returned. Further, the *cancellation* of a particular invocation is only possible while the specified delay has not passed.
+A [Node.js] module that returns a *buffered* and *cancelable* version for the provided function. The buffered function does **not** execute before the specified delay passes upon which it executes exactly **once**, no matter have many times it gets invoked in between.
+
+The *cancellation* of a particular invocation is only possible while the specified delay has not passed yet. Further, upon the invocation of the buffered function a *promise* is returned. Also, for [TypeScript] developers a decorator is provided as well.
 
 [Node.js]: https://nodejs.org/en/
+[TypeScript]: https://www.typescriptlang.org/
 
 ## Usage
 ### Install
