@@ -190,14 +190,27 @@ describe("index.decorator", function () {
             _createClass(Class, [{
                 key: "fn",
                 value: function fn(t) {
-                    return new Date().getTime() - t.getTime();
+                    return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+                        return regeneratorRuntime.wrap(function _callee$(_context) {
+                            while (1) {
+                                switch (_context.prev = _context.next) {
+                                    case 0:
+                                        return _context.abrupt("return", new Date().getTime() - t.getTime());
+
+                                    case 1:
+                                    case "end":
+                                        return _context.stop();
+                                }
+                            }
+                        }, _callee, this);
+                    }));
                 }
             }]);
 
             return Class;
         }();
 
-        __decorate([lib_1.decorator(1), __metadata("design:type", Function), __metadata("design:paramtypes", [Date]), __metadata("design:returntype", Number)], Class.prototype, "fn", null);
+        __decorate([lib_1.decorator(1), __metadata("design:type", Function), __metadata("design:paramtypes", [Date]), __metadata("design:returntype", Promise)], Class.prototype, "fn", null);
         var p = new Class().fn(new Date());
         chai_1.expect(p).to.be.a("Promise");
         p.then(function (res) {
@@ -212,11 +225,11 @@ describe("index.decorator", function () {
         setTimeout(done, 1);
     });
     it("should await a result", function () {
-        return __awaiter(undefined, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        return __awaiter(undefined, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
             var Class, dt;
-            return regeneratorRuntime.wrap(function _callee$(_context) {
+            return regeneratorRuntime.wrap(function _callee3$(_context3) {
                 while (1) {
-                    switch (_context.prev = _context.next) {
+                    switch (_context3.prev = _context3.next) {
                         case 0:
                             Class = function () {
                                 function Class() {
@@ -226,29 +239,42 @@ describe("index.decorator", function () {
                                 _createClass(Class, [{
                                     key: "fn",
                                     value: function fn(t) {
-                                        return new Date().getTime() - t.getTime();
+                                        return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+                                            return regeneratorRuntime.wrap(function _callee2$(_context2) {
+                                                while (1) {
+                                                    switch (_context2.prev = _context2.next) {
+                                                        case 0:
+                                                            return _context2.abrupt("return", new Date().getTime() - t.getTime());
+
+                                                        case 1:
+                                                        case "end":
+                                                            return _context2.stop();
+                                                    }
+                                                }
+                                            }, _callee2, this);
+                                        }));
                                     }
                                 }]);
 
                                 return Class;
                             }();
 
-                            __decorate([lib_1.decorator(1), __metadata("design:type", Function), __metadata("design:paramtypes", [Date]), __metadata("design:returntype", Number)], Class.prototype, "fn", null);
-                            _context.next = 4;
+                            __decorate([lib_1.decorator(1), __metadata("design:type", Function), __metadata("design:paramtypes", [Date]), __metadata("design:returntype", Promise)], Class.prototype, "fn", null);
+                            _context3.next = 4;
                             return new Class().fn(new Date());
 
                         case 4:
-                            dt = _context.sent;
+                            dt = _context3.sent;
 
                             chai_1.expect(dt).to.be.a("number");
                             chai_1.expect(dt >= 0).to.eq(true);
 
                         case 7:
                         case "end":
-                            return _context.stop();
+                            return _context3.stop();
                     }
                 }
-            }, _callee, this);
+            }, _callee3, this);
         }));
     });
     it("should return a cancelable function", function () {

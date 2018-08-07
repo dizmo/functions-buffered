@@ -98,11 +98,11 @@ describe("index.decorator", () => {
     it("should return a promise", (done) => {
         class Class {
             @buffered(1)
-            public fn(t: Date): number {
+            public async fn(t: Date) {
                 return new Date().getTime() - t.getTime();
             }
         }
-        const p: Promise<number> = new Class().fn(new Date()) as any;
+        const p = new Class().fn(new Date());
         expect(p).to.be.a("Promise");
         p.then((res: number) => {
             expect(res).to.be.a("number");
@@ -119,7 +119,7 @@ describe("index.decorator", () => {
     it("should await a result", async () => {
         class Class {
             @buffered(1)
-            public fn(t: Date): number {
+            public async fn(t: Date): Promise<number> {
                 return new Date().getTime() - t.getTime();
             }
         }
