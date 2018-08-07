@@ -26,28 +26,28 @@ var __awaiter = undefined && undefined.__awaiter || function (thisArg, _argument
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var chai_1 = require("chai");
-var index_1 = require("../lib/index");
+var lib_1 = require("../lib");
 require("mocha");
 describe("index.buffered", function () {
     it("should exist", function () {
-        chai_1.expect(index_1.buffered).to.not.be.an("undefined");
+        chai_1.expect(lib_1.buffered).to.not.be.an("undefined");
     });
     it("should be a function", function () {
-        chai_1.expect(index_1.buffered).to.be.a("function");
+        chai_1.expect(lib_1.buffered).to.be.a("function");
     });
 });
 describe("index.buffered", function () {
     it("should return a buffered function", function () {
-        var fn = index_1.buffered(function () {
+        var fn = lib_1.buffered(function () {
             chai_1.expect(true).to.eq(true);
         });
         chai_1.expect(fn).to.be.a("function");
     });
     it("should preserve `this` correctly", function (done) {
-        index_1.buffered(function () {
+        lib_1.buffered(function () {
             chai_1.expect(this).to.be.an("undefined");
         }, 1)();
-        index_1.buffered(function () {
+        lib_1.buffered(function () {
             chai_1.expect(this).to.be.an("object");
             chai_1.expect(this.key).to.eq(true);
         }.bind({ key: true }), 1)();
@@ -55,7 +55,7 @@ describe("index.buffered", function () {
     });
     it("should buffer invocations", function (done) {
         var n = 0;
-        var fn = index_1.buffered(function () {
+        var fn = lib_1.buffered(function () {
             n += 1;
         }, 5);
         chai_1.expect(n).to.eq(0);
@@ -83,13 +83,14 @@ describe("index.buffered", function () {
         }, 5);
     });
     it("should forward arguments", function (done) {
-        index_1.buffered(function (t) {
-            chai_1.expect(new Date().getTime() - t >= 0).to.eq(true);
-        }, 1)(new Date().getTime());
-        setTimeout(done, 1);
+        lib_1.buffered(function (t) {
+            var dt = new Date().getTime() - t.getTime();
+            chai_1.expect(dt >= 0).to.eq(true);
+            done();
+        }, 1)(new Date());
     });
     it("should return a promise", function (done) {
-        var fn = index_1.buffered(function (t) {
+        var fn = lib_1.buffered(function (t) {
             return new Date().getTime() - t;
         }, 1);
         var p = fn(new Date().getTime());
@@ -111,7 +112,7 @@ describe("index.buffered", function () {
                 while (1) {
                     switch (_context.prev = _context.next) {
                         case 0:
-                            fn = index_1.buffered(function (t) {
+                            fn = lib_1.buffered(function (t) {
                                 return new Date() - t;
                             }, 1);
                             _context.next = 3;
@@ -132,14 +133,14 @@ describe("index.buffered", function () {
         }));
     });
     it("should return a cancelable function", function () {
-        var fn = index_1.buffered(function () {
+        var fn = lib_1.buffered(function () {
             chai_1.expect(true).to.eq(true);
         });
         chai_1.expect(fn).to.be.a("function");
         chai_1.expect(fn.cancel).to.be.a("function");
     });
     it("should cancel invocations", function () {
-        var fn = index_1.buffered(function () {
+        var fn = lib_1.buffered(function () {
             chai_1.expect(true).to.eq(false);
         }, 1);
         fn();

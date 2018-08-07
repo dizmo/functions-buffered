@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { buffered } from "../lib/index";
+import { buffered } from "../lib";
 
 import "mocha";
 
@@ -66,10 +66,10 @@ describe("index.buffered", () => {
     });
 
     it("should forward arguments", (done) => {
-        buffered((t: number) => {
-            expect(new Date().getTime() - t >= 0).to.eq(true);
-        }, 1)(new Date().getTime());
-        setTimeout(done, 1);
+        buffered((t: Date) => {
+            const dt = new Date().getTime() - t.getTime();
+            expect(dt >= 0).to.eq(true); done();
+        }, 1)(new Date());
     });
 
     it("should return a promise", (done) => {

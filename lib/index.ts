@@ -1,8 +1,10 @@
-/* tslint:disable:ban-types */
+/* tslint:disable:trailing-comma */
 import "babel-polyfill";
 
-export interface IBufferedFunction extends Function {
-    cancel: Function;
+type IPromiseFunction = (
+    this: any, ...args: any[]) => Promise<any>;
+export interface IBufferedFunction extends IPromiseFunction {
+    cancel: () => void;
 }
 
 /**
@@ -10,21 +12,21 @@ export interface IBufferedFunction extends Function {
  *
  * The buffered function does *not* get invoked before the specified delay in
  * milliseconds passes, no matter have many times it gets invoked in between.
- * Also upon the invocation of the *buffering* function a promise is returned.
+ * Also upon the invocation of the *actual* function a promise is returned.
  * Further, it is also possible to *cancel* a particular invocation before the
  * delay passes.
  *
  * @param fn an arbitrary function
  * @param ms delay in milliseconds
- * @returns a buffered function (returning a promise)
+ * @returns a buffered function
  */
 export function buffered(
-    fn: Function, ms: number = 200,
+    fn: Function, ms: number = 200 // tslint:disable-line:ban-types
 ): IBufferedFunction {
     let id: number;
-    const bn: Function = function(
-        this: any, ...args: any[] // tslint:disable-line:trailing-comma
-    ) {
+    const bn: IPromiseFunction = function(
+        this: any, ...args: any[]
+    ): Promise<any> {
         return new Promise((resolve) => {
             clearTimeout(id); id = setTimeout(
                 () => resolve(fn.apply(this, args)), ms,
@@ -39,40 +41,35 @@ export function buffered(
 
 export function decorator(
     ms: number,
-): IBufferedFunction;
+): MethodDecorator;
 
 export function decorator(
-    target: any, key: string, descriptor?: PropertyDescriptor,
-): void;
+    tgt: any, key: string|symbol, tpd?: PropertyDescriptor
+): PropertyDescriptor|void;
 
 export function decorator(
-    arg: number|any, key?: string, descriptor?: PropertyDescriptor,
-): IBufferedFunction|void {
+    arg: number|any, key?: string|symbol, tpd?: PropertyDescriptor
+) {
     if (typeof arg === "number") {
-        return _decorator(arg) as IBufferedFunction;
+        return _decorator(arg);
     } else {
-        _decorator(200)(arg as any, key, descriptor);
+        return _decorator()(
+            arg as any,
+            key as string|symbol,
+            tpd as PropertyDescriptor
+        );
     }
 }
 
-function _decorator(
-    ms: number,
-): Function {
+function _decorator(ms?: number): MethodDecorator {
     return (
-        target: any, key: string, descriptor?: PropertyDescriptor,
-    ) => {
-        const fn: Function = descriptor
-            ? descriptor.value : target[key];
-        const bn = buffered(fn, ms);
-        for (const el in fn) {
-            if (fn.hasOwnProperty(el)) {
-                (bn as any)[el] = (fn as any)[el];
-            }
-        }
-        if (descriptor) {
-            descriptor.value = bn;
+        tgt: any, key: string|symbol, tpd?: PropertyDescriptor,
+    ): PropertyDescriptor|void => {
+        if (tpd) {
+            tpd.value = buffered(tpd.value, ms);
+            return tpd;
         } else {
-            target[key] = bn;
+            tgt[key] = buffered(tgt[key], ms);
         }
     };
 }
