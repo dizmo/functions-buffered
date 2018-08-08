@@ -5,7 +5,8 @@ let cp = require('child_process'),
 function arg(key, lhs, rhs) {
     let y = require('yargs')
         .default('build', true)
-        .default('cover', false);
+        .default('cover', false)
+        .default('lint', true);
     return y.argv[key]
         ? lhs !== undefined ? lhs : y.argv[key] : rhs;
 }
@@ -25,15 +26,24 @@ function run_install(flag) {
     }
 }
 function run_build() {
+    let build = (...args) => [
+        'build', arg('lint', '--lint', '--no-lint')
+    ].concat(args);
     if (arg('build')) {
-        run('npm', 'run-script', 'build')
+        run('npm', 'run-script', '--', ...build())
             .then(run_mocha).catch(ps.exit);
     } else {
         run_mocha(0);
     }
 }
 function run_mocha() {
-    run('npx', arg('cover', 'nyc'), 'mocha', 'dist/test')
+    let nyc = (...args) => [
+        './node_modules/nyc/bin/nyc.js'
+    ].concat(args);
+    let mocha = (...args) => [
+        './node_modules/mocha/bin/mocha'
+    ].concat(args);
+    run('node', arg('cover', ...nyc()), ...mocha('dist/test'))
         .then(ps.exit).catch(ps.exit);
 }
 

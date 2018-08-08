@@ -32,13 +32,14 @@ function run_lint() {
     }
 }
 function run_tsc() {
-    run('npx', 'tsc').then(run_babel).catch(ps.exit);
+    run('node', './node_modules/typescript/bin/tsc')
+        .then(run_babel).catch(ps.exit);
 }
 function run_babel() {
     let babel = (...args) => [
-        'babel', '--presets=env', '--quiet', '-s', '-d'
+        './node_modules/babel-cli/bin/babel.js', '--presets=env', '--quiet'
     ].concat(args);
-    run('npx', ...babel('dist', 'dist'))
+    run('node', ...babel('-s', '-d', 'dist', 'dist'))
         .then(ps.exit).catch(ps.exit);
 }
 

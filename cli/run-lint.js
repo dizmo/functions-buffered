@@ -19,12 +19,14 @@ function run_install(flag) {
 }
 function run_lint() {
     let lint = (...args) => [
-        'tslint', '--config', 'tslint.json'
+        './node_modules/tslint/bin/tslint', '--config', 'tslint.json'
     ].concat(
         args, process.argv.slice(2) // e.g. `--fix`!
     );
-    run('npx', ...lint("'lib/**/*.ts'", "'test/**/*.ts'"))
-        .then(ps.exit).catch(ps.exit);
+    Promise.all([
+        run('node', ...lint('"lib/**/*.ts"')),
+        run('node', ...lint('"test/**/*.ts"'))
+    ]).then(ps.exit).catch(ps.exit);
 }
 
 fs.access('./node_modules', run_install);
