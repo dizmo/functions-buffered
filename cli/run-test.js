@@ -1,50 +1,14 @@
-let cp = require('child_process'),
-    ps = require('process'),
-    fs = require('fs');
+const { arg, install, run } = require('./lib-utils');
+const { exit } = require('process');
 
-function arg(key, lhs, rhs) {
-    let y = require('yargs')
-        .default('build', true)
-        .default('cover', false)
-        .default('lint', true);
-    return y.argv[key]
-        ? lhs !== undefined ? lhs : y.argv[key] : rhs;
-}
-function run(cmd, ...args) {
-    return new Promise((res, rej) => cp.spawn(cmd, args, {
-        shell: true, stdio: 'inherit'
-    }).on('exit', (code) =>
-        code === 0 ? res(code) : rej(code)
-    ));
-}
-function run_install(flag) {
-    if (flag) {
-        run('npm', 'install')
-            .then(run_build).catch(ps.exit);
-    } else {
-        run_build(0);
-    }
-}
 function run_build() {
-    let build = (...args) => [
-        'build', arg('lint', '--lint', '--no-lint')
-    ].concat(args);
-    if (arg('build')) {
-        run('npm', 'run-script', '--', ...build())
-            .then(run_mocha).catch(ps.exit);
-    } else {
-        run_mocha(0);
-    }
+    return arg('build')
+        ? run('npm', 'run', '--', 'build', arg('lint', '--lint', '--no-lint'))
+        : null;
 }
 function run_mocha() {
-    let nyc = (...args) => [
-        './node_modules/nyc/bin/nyc.js'
-    ].concat(args);
-    let mocha = (...args) => [
-        './node_modules/mocha/bin/mocha'
-    ].concat(args);
-    run('node', arg('cover', ...nyc()), ...mocha('dist/test'))
-        .then(ps.exit).catch(ps.exit);
+    return run('npx', arg('cover', 'nyc'), 'mocha', 'dist/test');
 }
 
-fs.access('./node_modules', run_install);
+install('./node_modules')
+    .then(run_build).then(run_mocha).catch(exit);
