@@ -1,14 +1,15 @@
-const { arg, install, run } = require('./lib-utils');
+const { arg, npm, npx } = require('./run-utils');
 const { exit } = require('process');
 
-function run_build() {
-    return arg('build')
-        ? run('npm', 'run', '--', 'build', arg('lint', '--lint', '--no-lint'))
-        : null;
-}
-function run_mocha() {
-    return run('npx', arg('cover', 'nyc'), 'mocha', 'dist/test');
-}
+const test = cover => !cover
+    ? npx('mocha', 'dist/test')
+    : npx('nyc', 'mocha', 'dist/test');
 
-install('./node_modules')
-    .then(run_build).then(run_mocha).catch(exit);
+if (require.main === module) {
+    let p = npm('install').then(() => {
+        p = arg('lint')(true) ? p.then(require('./run-lint')) : p;
+        p = arg('build')(true) ? p.then(require('./run-build')) : p;
+        p.then(test.bind(null, arg('cover')(false))).catch(exit);
+    });
+}
+module.exports = test;

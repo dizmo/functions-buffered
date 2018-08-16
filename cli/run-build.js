@@ -1,15 +1,13 @@
-const { arg, install, run } = require('./lib-utils');
+const { arg, npm, npx } = require('./run-utils');
 const { exit } = require('process');
 
-function run_lint() {
-    return arg('lint') ? run('npm', 'run', 'lint') : null;
+const build = () => npx('tsc').then(() =>
+    npx('babel', '--presets=env', '-qsd', 'dist', 'dist')
+);
+if (require.main === module) {
+    let p = npm('install').then(() => {
+        p = arg('lint')(true) ? p.then(require('./run-lint')) : p;
+        p.then(build).catch(exit);
+    });
 }
-function run_build() {
-    return run('npx', 'tsc');
-}
-function run_babel() {
-    return run('npx', 'babel', '--presets=env', '-qsd', 'dist', 'dist');
-}
-
-install('./node_modules')
-    .then(run_lint).then(run_build).then(run_babel).catch(exit);
+module.exports = build;

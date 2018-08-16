@@ -1,17 +1,10 @@
-const { install, run } = require('./lib-utils');
+const { arg, npm, npx } = require('./run-utils');
 const { exit } = require('process');
 
-function run_lint() {
-    const lint = (...args) => [
-        'tslint', '--config', 'tslint.json'
-    ].concat(
-        args, process.argv.slice(2) // e.g. `--fix`!
-    );
-    return Promise.all([
-        run('npx', ...lint('"lib/**/*.ts"')),
-        run('npx', ...lint('"test/**/*.ts"'))
-    ]);
+const lint = () => npx('tslint', '--config', 'tslint.json',
+    '"lib/**/*.ts"', '"test/**/*.ts"', arg('fix', '--fix')(false)
+);
+if (require.main === module) {
+    npm('install').then(lint).catch(exit);
 }
-
-install('./node_modules')
-    .then(run_lint).catch(exit);
+module.exports = lint;
