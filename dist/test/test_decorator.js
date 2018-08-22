@@ -46,15 +46,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var chai_1 = require("chai");
 var lib_1 = require("../lib");
 require("mocha");
-describe("index.decorator", function () {
+describe("buffered.decorator", function () {
     it("should exist", function () {
-        chai_1.expect(lib_1.decorator).to.not.be.an("undefined");
+        chai_1.expect(lib_1.buffered.decorator).to.not.be.an("undefined");
     });
     it("should be a function", function () {
-        chai_1.expect(lib_1.decorator).to.be.a("function");
+        chai_1.expect(lib_1.buffered.decorator).to.be.a("function");
     });
 });
-describe("index.decorator", function () {
+describe("buffered.decorator", function () {
     it("should return a buffered function", function () {
         var Class = function () {
             function Class() {
@@ -71,7 +71,7 @@ describe("index.decorator", function () {
             return Class;
         }();
 
-        __decorate([lib_1.decorator, __metadata("design:type", Function), __metadata("design:paramtypes", []), __metadata("design:returntype", void 0)], Class.prototype, "fn", null);
+        __decorate([lib_1.buffered.decorator, __metadata("design:type", Function), __metadata("design:paramtypes", []), __metadata("design:returntype", void 0)], Class.prototype, "fn", null);
         chai_1.expect(new Class().fn).to.be.a("function");
     });
     it("should preserve `this` correctly", function (done) {
@@ -92,7 +92,7 @@ describe("index.decorator", function () {
             return Class;
         }();
 
-        __decorate([lib_1.decorator(0), __metadata("design:type", Function), __metadata("design:paramtypes", []), __metadata("design:returntype", void 0)], Class.prototype, "fn", null);
+        __decorate([lib_1.buffered.decorator(0), __metadata("design:type", Function), __metadata("design:paramtypes", []), __metadata("design:returntype", void 0)], Class.prototype, "fn", null);
         new Class().fn();
     });
     it("should preserve `this` correctly", function (done) {
@@ -113,7 +113,7 @@ describe("index.decorator", function () {
             return Class;
         }();
 
-        __decorate([lib_1.decorator(0), __metadata("design:type", Function), __metadata("design:paramtypes", []), __metadata("design:returntype", void 0)], Class.prototype, "fn", null);
+        __decorate([lib_1.buffered.decorator(0), __metadata("design:type", Function), __metadata("design:paramtypes", []), __metadata("design:returntype", void 0)], Class.prototype, "fn", null);
         new Class().fn.bind({ key: true })();
     });
     it("should buffer invocations", function (done) {
@@ -134,7 +134,7 @@ describe("index.decorator", function () {
             return Accumulator;
         }();
 
-        __decorate([lib_1.decorator(5), __metadata("design:type", Function), __metadata("design:paramtypes", []), __metadata("design:returntype", void 0)], Accumulator.prototype, "fn", null);
+        __decorate([lib_1.buffered.decorator(5), __metadata("design:type", Function), __metadata("design:paramtypes", []), __metadata("design:returntype", void 0)], Accumulator.prototype, "fn", null);
         var acc = new Accumulator();
         chai_1.expect(acc.n).to.eq(0);
         chai_1.expect(acc.fn).to.be.a("function");
@@ -178,7 +178,7 @@ describe("index.decorator", function () {
             return Class;
         }();
 
-        __decorate([lib_1.decorator(1), __metadata("design:type", Function), __metadata("design:paramtypes", [Date]), __metadata("design:returntype", void 0)], Class.prototype, "fn", null);
+        __decorate([lib_1.buffered.decorator(1), __metadata("design:type", Function), __metadata("design:paramtypes", [Date]), __metadata("design:returntype", void 0)], Class.prototype, "fn", null);
         new Class().fn(new Date());
     });
     it("should return a promise", function (done) {
@@ -210,7 +210,7 @@ describe("index.decorator", function () {
             return Class;
         }();
 
-        __decorate([lib_1.decorator(1), __metadata("design:type", Function), __metadata("design:paramtypes", [Date]), __metadata("design:returntype", Promise)], Class.prototype, "fn", null);
+        __decorate([lib_1.buffered.decorator(1), __metadata("design:type", Function), __metadata("design:paramtypes", [Date]), __metadata("design:returntype", Promise)], Class.prototype, "fn", null);
         var p = new Class().fn(new Date());
         chai_1.expect(p).to.be.a("Promise");
         p.then(function (res) {
@@ -259,7 +259,7 @@ describe("index.decorator", function () {
                                 return Class;
                             }();
 
-                            __decorate([lib_1.decorator(1), __metadata("design:type", Function), __metadata("design:paramtypes", [Date]), __metadata("design:returntype", Promise)], Class.prototype, "fn", null);
+                            __decorate([lib_1.buffered.decorator(1), __metadata("design:type", Function), __metadata("design:paramtypes", [Date]), __metadata("design:returntype", Promise)], Class.prototype, "fn", null);
                             _context3.next = 4;
                             return new Class().fn(new Date());
 
@@ -293,7 +293,7 @@ describe("index.decorator", function () {
             return Class;
         }();
 
-        __decorate([lib_1.decorator, __metadata("design:type", Function), __metadata("design:paramtypes", []), __metadata("design:returntype", void 0)], Class.prototype, "fn", null);
+        __decorate([lib_1.buffered.decorator, __metadata("design:type", Function), __metadata("design:paramtypes", []), __metadata("design:returntype", void 0)], Class.prototype, "fn", null);
         chai_1.expect(new Class().fn).to.be.a("function");
         chai_1.expect(new Class().fn.cancel).to.be.a("function");
     });
@@ -313,7 +313,7 @@ describe("index.decorator", function () {
             return Class;
         }();
 
-        __decorate([lib_1.decorator, __metadata("design:type", Function), __metadata("design:paramtypes", []), __metadata("design:returntype", void 0)], Class.prototype, "fn", null);
+        __decorate([lib_1.buffered.decorator, __metadata("design:type", Function), __metadata("design:paramtypes", []), __metadata("design:returntype", void 0)], Class.prototype, "fn", null);
         var c = new Class();
         c.fn();
         c.fn();

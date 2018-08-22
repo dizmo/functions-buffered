@@ -1,6 +1,8 @@
 import "babel-polyfill";
-declare type IPromiseFunction = (this: any, ...args: any[]) => Promise<any>;
-export interface IBufferedFunction extends IPromiseFunction {
+export interface ICancelableFunction {
+    (this: any, ...args: any[]): Promise<any>;
+}
+export interface ICancelableFunction {
     cancel: () => void;
 }
 /**
@@ -16,6 +18,6 @@ export interface IBufferedFunction extends IPromiseFunction {
  * @param ms delay in milliseconds
  * @returns a buffered function
  */
-export declare function buffered(fn: Function, ms?: number): IBufferedFunction;
+export declare function buffered(fn: Function, ms?: number): ICancelableFunction;
 export default buffered;
 //# sourceMappingURL=buffered.d.ts.map

@@ -1,6 +1,10 @@
-export { IBufferedFunction } from "./buffered";
-export { buffered } from "./buffered";
-export { decorator } from "./decorator";
-import { buffered } from "./buffered";
+import { ICancelableFunction } from "./buffered";
+export interface IBufferedFunction {
+    (fn: Function, ms?: number): ICancelableFunction;
+}
+export interface IBufferedFunction {
+    decorator: Function;
+}
+export declare const buffered: IBufferedFunction;
 export default buffered;
 //# sourceMappingURL=index.d.ts.map

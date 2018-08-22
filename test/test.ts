@@ -3,7 +3,7 @@ import { buffered } from "../lib";
 
 import "mocha";
 
-describe("index.buffered", () => {
+describe("buffered", () => {
     it("should exist", () => {
         expect(buffered).to.not.be.an("undefined");
     });
@@ -12,7 +12,7 @@ describe("index.buffered", () => {
     });
 });
 
-describe("index.buffered", () => {
+describe("buffered", () => {
     it("should return a buffered function", () => {
         const fn = buffered(() => {
             expect(true).to.eq(true);

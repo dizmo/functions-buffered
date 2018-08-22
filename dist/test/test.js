@@ -28,7 +28,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var chai_1 = require("chai");
 var lib_1 = require("../lib");
 require("mocha");
-describe("index.buffered", function () {
+describe("buffered", function () {
     it("should exist", function () {
         chai_1.expect(lib_1.buffered).to.not.be.an("undefined");
     });
@@ -36,7 +36,7 @@ describe("index.buffered", function () {
         chai_1.expect(lib_1.buffered).to.be.a("function");
     });
 });
-describe("index.buffered", function () {
+describe("buffered", function () {
     it("should return a buffered function", function () {
         var fn = lib_1.buffered(function () {
             chai_1.expect(true).to.eq(true);

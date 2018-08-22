@@ -1,9 +1,10 @@
-/* tslint:disable:ban-types trailing-comma */
+/* tslint:disable:ban-types callable-types trailing-comma */
 import "babel-polyfill";
 
-type IPromiseFunction = (
-    this: any, ...args: any[]) => Promise<any>;
-export interface IBufferedFunction extends IPromiseFunction {
+export interface ICancelableFunction {
+    (this: any, ...args: any[]): Promise<any>;
+}
+export interface ICancelableFunction {
     cancel: () => void;
 }
 
@@ -22,9 +23,9 @@ export interface IBufferedFunction extends IPromiseFunction {
  */
 export function buffered(
     fn: Function, ms: number = 200
-): IBufferedFunction {
+): ICancelableFunction {
     let id: number;
-    const bn: IPromiseFunction = function(
+    const bn = function(
         this: any, ...args: any[]
     ): Promise<any> {
         return new Promise((resolve) => {
@@ -33,10 +34,10 @@ export function buffered(
             );
         });
     };
-    (bn as IBufferedFunction).cancel = () => {
+    (bn as ICancelableFunction).cancel = () => {
         clearTimeout(id);
     };
-    return bn as IBufferedFunction;
+    return bn as ICancelableFunction;
 }
 
 export default buffered;

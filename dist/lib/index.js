@@ -1,10 +1,12 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+/* tslint:disable:ban-types callable-types */
 var buffered_1 = require("./buffered");
-exports.buffered = buffered_1.buffered;
 var decorator_1 = require("./decorator");
-exports.decorator = decorator_1.decorator;
-var buffered_2 = require("./buffered");
-exports.default = buffered_2.buffered;
+exports.buffered = function () {
+    buffered_1.buffered.decorator = decorator_1.decorator;
+    return buffered_1.buffered;
+}();
+exports.default = exports.buffered;
 //# sourceMappingURL=index.js.map

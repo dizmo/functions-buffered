@@ -1,22 +1,22 @@
 /* tslint:disable:max-classes-per-file */
 import { expect } from "chai";
-import { decorator as buffered } from "../lib";
+import { buffered } from "../lib";
 
 import "mocha";
 
-describe("index.decorator", () => {
+describe("buffered.decorator", () => {
     it("should exist", () => {
-        expect(buffered).to.not.be.an("undefined");
+        expect(buffered.decorator).to.not.be.an("undefined");
     });
     it("should be a function", () => {
-        expect(buffered).to.be.a("function");
+        expect(buffered.decorator).to.be.a("function");
     });
 });
 
-describe("index.decorator", () => {
+describe("buffered.decorator", () => {
     it("should return a buffered function", () => {
         class Class {
-            @buffered
+            @buffered.decorator
             public fn() {
                 expect(true).to.eq(true);
             }
@@ -26,7 +26,7 @@ describe("index.decorator", () => {
 
     it("should preserve `this` correctly", (done) => {
         class Class {
-            @buffered(0)
+            @buffered.decorator(0)
             public fn() {
                 expect(this).to.be.an("object");
                 expect(this instanceof Class).to.eq(true);
@@ -38,7 +38,7 @@ describe("index.decorator", () => {
 
     it("should preserve `this` correctly", (done) => {
         class Class {
-            @buffered(0)
+            @buffered.decorator(0)
             public fn(this: any) {
                 expect(this).to.be.an("object");
                 expect(this.key).to.eq(true);
@@ -51,7 +51,7 @@ describe("index.decorator", () => {
     it("should buffer invocations", (done) => {
         class Accumulator {
             public n = 0;
-            @buffered(5)
+            @buffered.decorator(5)
             public fn() {
                 this.n += 1;
             }
@@ -86,7 +86,7 @@ describe("index.decorator", () => {
 
     it("should forward arguments", (done) => {
         class Class {
-            @buffered(1)
+            @buffered.decorator(1)
             public fn(t: Date) {
                 const dt = new Date().getTime() - t.getTime();
                 expect(dt >= 0).to.eq(true); done();
@@ -97,7 +97,7 @@ describe("index.decorator", () => {
 
     it("should return a promise", (done) => {
         class Class {
-            @buffered(1)
+            @buffered.decorator(1)
             public async fn(t: Date) {
                 return new Date().getTime() - t.getTime();
             }
@@ -118,7 +118,7 @@ describe("index.decorator", () => {
 
     it("should await a result", async () => {
         class Class {
-            @buffered(1)
+            @buffered.decorator(1)
             public async fn(t: Date): Promise<number> {
                 return new Date().getTime() - t.getTime();
             }
@@ -130,7 +130,7 @@ describe("index.decorator", () => {
 
     it("should return a cancelable function", () => {
         class Class {
-            @buffered
+            @buffered.decorator
             public fn() {
                 expect(true).to.eq(false);
             }
@@ -141,7 +141,7 @@ describe("index.decorator", () => {
 
     it("should cancel invocations", () => {
         class Class {
-            @buffered
+            @buffered.decorator
             public fn() {
                 expect(true).to.eq(false);
             }
