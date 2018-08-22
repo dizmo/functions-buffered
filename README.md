@@ -19,7 +19,8 @@ let lib = require("@dizmo/functions-buffered");
 ### Examples
 ```typescript
 import { buffered } from "@dizmo/functions-buffered";
-
+```
+```typescript
 let fn = buffered((t: Date) => {
     return new Date().getTime() - t.getTime();
 }, 200);
@@ -31,13 +32,11 @@ fn(new Date()).then((res: number) => {
 });
 ```
 ```typescript
-import { buffered } from "@dizmo/functions-buffered";
-
 let fn = buffered(() => {
-    throw new Error("won"t be thrown");
+    throw new Error("won't be thrown");
 }, 600);
 
-fn().then((res: any) => { // won"t execute!
+fn().then((res: any) => { // won't execute!
     console.debug(res);
 }).catch((err: Error) => {
     console.error(err);
@@ -46,14 +45,12 @@ fn().then((res: any) => { // won"t execute!
 fn.cancel();
 ```
 ```typescript
-import { decorator as buffered } from "@dizmo/functions-buffered";
-
 class Class {
-    @buffered(100)
+    @buffered.decorator(100)
     public async f1(t: Date): Promise<number> {
         return new Date().getTime() - t.getTime();
     }
-    @buffered // 200ms default
+    @buffered.decorator // 200ms default
     public async f2(t: Date) {
         return new Date().getTime() - t.getTime();
     }
@@ -61,7 +58,7 @@ class Class {
 
 const p1: Promise<number>
     = new Class().f1(new Date());
-const p2: Promise<number>
+const p2
     = new Class().f2(new Date());
 
 p1.then((res: number) => { console.debug(res); });
