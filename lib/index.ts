@@ -10,8 +10,8 @@ export interface IBufferedFunction {
     decorator: Function;
 }
 export const buffered: IBufferedFunction = (() => {
-    (_buffered as IBufferedFunction).decorator = _decorator;
-    return _buffered as IBufferedFunction;
+    (_buffered as any).decorator = _decorator;
+    return _buffered as any;
 })();
 
 export default buffered;
