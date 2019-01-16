@@ -45,6 +45,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /* tslint:disable:max-classes-per-file */
 var chai_1 = require("chai");
 var lib_1 = require("../lib");
+require("@babel/polyfill");
 require("mocha");
 describe("buffered.decorator", function () {
     it("should exist", function () {

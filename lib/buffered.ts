@@ -1,5 +1,6 @@
-/* tslint:disable:ban-types callable-types trailing-comma */
-import "babel-polyfill";
+/* tslint:disable:ban-types */
+/* tslint:disable:callable-types */
+/* tslint:disable:trailing-comma */
 
 export interface ICancelableFunction {
     (this: any, ...args: any[]): Promise<any>;

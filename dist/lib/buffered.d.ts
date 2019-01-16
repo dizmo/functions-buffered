@@ -1,4 +1,3 @@
-import "babel-polyfill";
 export interface ICancelableFunction {
     (this: any, ...args: any[]): Promise<any>;
 }

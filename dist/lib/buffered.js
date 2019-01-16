@@ -1,8 +1,9 @@
 "use strict";
+/* tslint:disable:ban-types */
+/* tslint:disable:callable-types */
+/* tslint:disable:trailing-comma */
 
 Object.defineProperty(exports, "__esModule", { value: true });
-/* tslint:disable:ban-types callable-types trailing-comma */
-require("babel-polyfill");
 /**
  * Returns a buffered and cancelable version for the provided function.
  *

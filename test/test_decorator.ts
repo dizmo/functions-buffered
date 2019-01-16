@@ -2,6 +2,7 @@
 import { expect } from "chai";
 import { buffered } from "../lib";
 
+import "@babel/polyfill";
 import "mocha";
 
 describe("buffered.decorator", () => {
