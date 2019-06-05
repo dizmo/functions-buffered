@@ -1,9 +1,13 @@
 "use strict";
 /* tslint:disable:ban-types */
+
 /* tslint:disable:callable-types */
+
 /* tslint:disable:trailing-comma */
 
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 /**
  * Returns a buffered and cancelable version for the provided function.
  *
@@ -17,29 +21,33 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * @param ms delay in milliseconds
  * @returns a buffered function
  */
+
 function buffered(fn) {
-    var ms = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 200;
+  var ms = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 200;
+  var id;
 
-    var id = void 0;
-    var bn = function bn() {
-        var _this = this;
+  var bn = function bn() {
+    var _this = this;
 
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
 
-        return new Promise(function (resolve) {
-            clearTimeout(id);
-            id = setTimeout(function () {
-                return resolve(fn.apply(_this, args));
-            }, ms);
-        });
-    };
-    bn.cancel = function () {
-        clearTimeout(id);
-    };
-    return bn;
+    return new Promise(function (resolve) {
+      clearTimeout(id);
+      id = setTimeout(function () {
+        return resolve(fn.apply(_this, args));
+      }, ms);
+    });
+  };
+
+  bn.cancel = function () {
+    clearTimeout(id);
+  };
+
+  return bn;
 }
+
 exports.buffered = buffered;
-exports.default = buffered;
+exports["default"] = buffered;
 //# sourceMappingURL=buffered.js.map
