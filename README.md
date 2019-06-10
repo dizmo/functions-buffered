@@ -19,7 +19,7 @@ npm install @dizmo/functions-buffered --save
 ### Require
 
 ```javascript
-let lib = require("@dizmo/functions-buffered");
+const { buffered } = require("@dizmo/functions-buffered");
 ```
 
 ### Examples
