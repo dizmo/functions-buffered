@@ -1,11 +1,7 @@
-/* tslint:disable:ban-types */
-/* tslint:disable:callable-types */
-/* tslint:disable:trailing-comma */
-
-export interface ICancelableFunction {
+export interface CancelableFunction {
     (this: any, ...args: any[]): Promise<any>;
 }
-export interface ICancelableFunction {
+export interface CancelableFunction {
     cancel: () => void;
 }
 
@@ -23,10 +19,10 @@ export interface ICancelableFunction {
  * @returns a buffered function
  */
 export function buffered(
-    fn: Function, ms: number = 200
-): ICancelableFunction {
+    fn: Function, ms = 200
+): CancelableFunction {
     let id: number;
-    const bn = function(
+    const bn = function (
         this: any, ...args: any[]
     ): Promise<any> {
         return new Promise((resolve) => {
@@ -35,10 +31,9 @@ export function buffered(
             );
         });
     };
-    (bn as ICancelableFunction).cancel = () => {
+    (bn as CancelableFunction).cancel = () => {
         clearTimeout(id);
     };
-    return bn as ICancelableFunction;
+    return bn as CancelableFunction;
 }
-
 export default buffered;

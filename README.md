@@ -19,7 +19,7 @@ npm install @dizmo/functions-buffered --save
 ### Require
 
 ```javascript
-let lib = require("@dizmo/functions-buffered");
+const { buffered } = require("@dizmo/functions-buffered");
 ```
 
 ### Examples
@@ -143,6 +143,12 @@ npm run cover
 npm run -- cover --no-lint --no-clean --no-build
 ```
 
+## Documentation
+
+```sh
+npm run docs
+```
+
 ## Publish
 
 ```sh
@@ -157,4 +163,4 @@ npm publish --access=public
 
 ## Copyright
 
- © 2019 [dizmo AG](http://dizmo.com/), Switzerland
+ © 2020 [dizmo AG](http://dizmo.com/), Switzerland

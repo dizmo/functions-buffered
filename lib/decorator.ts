@@ -1,4 +1,3 @@
-/* tslint:disable:trailing-comma */
 import { buffered } from "./buffered";
 
 /**
@@ -16,29 +15,26 @@ import { buffered } from "./buffered";
 export function decorator(
     ms: number,
 ): MethodDecorator;
-
 export function decorator(
-    tgt: any, key: string|symbol, tpd?: PropertyDescriptor
-): PropertyDescriptor|void;
-
+    tgt: any, key: string | symbol, tpd?: PropertyDescriptor
+): PropertyDescriptor | void;
 export function decorator(
-    arg: number|any, key?: string|symbol, tpd?: PropertyDescriptor
-) {
+    arg: number | any, key?: string | symbol, tpd?: PropertyDescriptor
+): MethodDecorator | PropertyDescriptor | void {
     if (typeof arg === "number") {
         return _decorator(arg);
     } else {
         return _decorator()(
             arg as any,
-            key as string|symbol,
+            key as string | symbol,
             tpd as PropertyDescriptor
         );
     }
 }
-
 function _decorator(ms?: number): MethodDecorator {
     return (
-        tgt: any, key: string|symbol, tpd?: PropertyDescriptor,
-    ): PropertyDescriptor|void => {
+        tgt: any, key: string | symbol, tpd?: PropertyDescriptor,
+    ): PropertyDescriptor | void => {
         if (tpd) {
             tpd.value = buffered(tpd.value, ms);
             return tpd;
@@ -47,5 +43,4 @@ function _decorator(ms?: number): MethodDecorator {
         }
     };
 }
-
 export default decorator;
