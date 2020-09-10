@@ -58,5 +58,5 @@
     "test": "node ./cli/run-test.js"
   },
   "types": "dist/lib/index.d.ts",
-  "version": "2.0.11"
+  "version": "2.0.12"
 }
