@@ -21,7 +21,7 @@ export interface CancelableFunction {
 export function buffered(
     fn: Function, ms = 200
 ): CancelableFunction {
-    let id: number;
+    let id: ReturnType<typeof setTimeout>;
     const bn = function (
         this: any, ...args: any[]
     ): Promise<any> {
